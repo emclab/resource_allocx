@@ -1,0 +1,13 @@
+<%= simple_form_for @alloc do |f| %>    
+	  <%= f.input :name, :label => t('Resource Name') %>  
+	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
+	  <% if readonly?(@alloc, 'status_id')%>
+	    <%= f.input :status_noupdate, :label => t('Resource Status'), :input_html => {:value => @alloc.status.name} if @alloc.status_id.present? %>
+	    <%= f.input :status_noupdate, :label => t('Resource Status') if @alloc.status_id.blank? %>
+	  <% else %>
+	    <%= f.input :status_id, :label => t('Resource Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'alloc_status'), :include_blank => true %>
+	  <% end %>
+
+	  
+	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
+<% end %>  

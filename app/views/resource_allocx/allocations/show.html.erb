@@ -1,0 +1,25 @@
+<div id="main_body">
+<h4><%=t('Resource Allocation') %></h4>
+
+<p>
+  <b><%= t('Name') %></b>
+  <%= @alloc.name %>
+</p>
+<p>
+  <b><%= t('Description') %></b>
+  <%= @alloc.description %>
+</p>
+<p>
+  <b><%= t('Resource Status') %></b>
+  <%= @alloc.status.name %>
+</p>
+<p>
+  <b><%= t('Last Updated By') %></b>
+  <%= @alloc.last_updated_by.name %>
+</p>
+
+  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @event_task.id, :resource_name => params[:controller], :subaction => 'event_task', :format => :js), :remote => true, 
+                          :id => 'new_log_link', :class => BUTTONS_CLS['action'] if has_action_right?('create_event_task', 'commonx/logs') %>    	
+</div>

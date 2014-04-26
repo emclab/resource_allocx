@@ -1,0 +1,13 @@
+<div id="main_body">
+<h4><%=t('Edit Resource Allocation') %></h4>
+
+<% if @erb_code  %>
+	<%= render inline: ERB.new(@erb_code).result(binding) %>
+<% else %>
+	<%= render partial: 'form' %>
+<% end %>
+ 
+<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+</div>
+  
+ 

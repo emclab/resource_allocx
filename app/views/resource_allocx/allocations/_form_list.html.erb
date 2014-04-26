@@ -1,0 +1,35 @@
+<div class="pagination"><%= will_paginate models %></div>
+    <table class="table table-striped">
+		<tr>
+			<th><%= t('Name') %></th>
+			<th><%= t('Description') %></th>
+			<th><%= t('Resource Id') %></th>
+			<th><%= t('Status') %></th>
+			<th><%= t('Start') %></th>
+			<th><%= t('End') %></th>
+			<th><%= t('Last updated by') %></th>
+			<th></th>
+		</tr>
+		<% models.each do |r| %>
+		  <tr>
+		  	<td><%= r.name %></td>
+			<td><%= prt(r, :description) %></td>
+			<td><%= prt(r, :resource_id) %></td>
+			<td><%= t(prt(r, :status).to_s) %></td>
+			<td><%= t(prt(r, :start_date).to_s) %></td>
+			<td><%= t(prt(r, :end_date).to_s) %></td>
+			<td><%= prt(r, 'last_updated_by.name') %></td>    
+		    <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_resource_allocx(r)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>
+		  </tr>
+		<% end %>
+	</table>
+	
+	<table class="table table-striped">
+	  <tr>
+	    <th>
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
+	    </th>
+	  </tr>
+	</table>
+	

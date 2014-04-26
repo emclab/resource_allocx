@@ -1,0 +1,18 @@
+<% if @view_in_config && @erb_code %>
+    <%= render inline: @erb_code %>
+<% else %>
+    <%= simple_form_for(@allocation) do |f| %>
+    <%= f.input :name, :label => t('Resource Name') %>
+    <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
+    <%= f.input :status_id, :label => t('Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'alloc_status'), :include_blank => true %>
+    <%= f.input :start_date, :label => t('Start Date'), :as => :string %>
+    <%= f.input :end_date, :label => t('End Date'), :as => :string %>
+    <%= f.input :resource_id, :as => :hidden, :input_html => {:value => @resource_id} %>
+    <%= f.input :resource_string, :as => :hidden, :input_html => {:value => @resource_string} %>
+    <%= f.input :resource_category, :as => :hidden, :input_html => {:value => @resource_category} %>
+
+    <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+    <%= f.button :submit, t('Save') , :class => BUTTONS_CLS['action'] %>
+<% end %>
+<% end %>
+
