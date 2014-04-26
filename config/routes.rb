@@ -1,6 +1,6 @@
 ResourceAllocx::Engine.routes.draw do
 
-  resources :alloctions
+  resources :allocations
 
   root :to => 'allocations#index'
 end

@@ -1,13 +1,18 @@
-<%= simple_form_for @alloc do |f| %>    
+<% if @view_in_config && @erb_code %>
+    <%= render inline: @erb_code %>
+<% else %>
+<%= simple_form_for @allocation do |f| %>    
 	  <%= f.input :name, :label => t('Resource Name') %>  
 	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
-	  <% if readonly?(@alloc, 'status_id')%>
-	    <%= f.input :status_noupdate, :label => t('Resource Status'), :input_html => {:value => @alloc.status.name} if @alloc.status_id.present? %>
-	    <%= f.input :status_noupdate, :label => t('Resource Status') if @alloc.status_id.blank? %>
+	  <% if readonly?(@allocation, 'status_id')%>
+	    <%= f.input :status_noupdate, :label => t('Resource Status'), :input_html => {:value => @allocation.status.name} if @allocation.status_id.present? %>
+	    <%= f.input :status_noupdate, :label => t('Resource Status') if @allocation.status_id.blank? %>
 	  <% else %>
 	    <%= f.input :status_id, :label => t('Resource Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'alloc_status'), :include_blank => true %>
 	  <% end %>
 
-	  
+	  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
 	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
 <% end %>  
+
+<% end %>

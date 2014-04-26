@@ -13,5 +13,11 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    add_index :resource_allocx_allocations, [:resource_id, :resource_string]
+    add_index :resource_allocx_allocations, :resource_id
+    add_index :resource_allocx_allocations, :resource_string
+    add_index :resource_allocx_allocations, :status_id
+    add_index :resource_allocx_allocations, :resource_category
   end
 end

@@ -1,21 +1,21 @@
 <div id="main_body">
-<h4><%=t('Resource Allocation') %></h4>
+<h4><%=@title %></h4>
 
 <p>
   <b><%= t('Name') %></b>
-  <%= @alloc.name %>
+  <%= @allocation.name %>
 </p>
 <p>
   <b><%= t('Description') %></b>
-  <%= @alloc.description %>
+  <%= @allocation.description %>
 </p>
 <p>
   <b><%= t('Resource Status') %></b>
-  <%= @alloc.status.name %>
+  <%= @allocation.status.name if @allocation.status_id.present? %>
 </p>
 <p>
   <b><%= t('Last Updated By') %></b>
-  <%= @alloc.last_updated_by.name %>
+  <%= @allocation.last_updated_by.name %>
 </p>
 
   <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
