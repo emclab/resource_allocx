@@ -10,8 +10,10 @@
 	  <% else %>
 	    <%= f.input :status_id, :label => t('Resource Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'alloc_status'), :include_blank => true %>
 	  <% end %>
-
-	  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+        <%= f.simple_fields_for :man_power do |builder| %>
+            <%= render('man_power', :f => builder)%>
+        <% end %>
+        <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
 	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
 <% end %>  
 

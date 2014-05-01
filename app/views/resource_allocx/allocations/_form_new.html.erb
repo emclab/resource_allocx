@@ -10,7 +10,9 @@
     <%= f.input :resource_id, :as => :hidden, :input_html => {:value => @resource_id} %>
     <%= f.input :resource_string, :as => :hidden, :input_html => {:value => @resource_string} %>
     <%= f.input :resource_category, :as => :hidden, :input_html => {:value => @resource_category} %>
-
+    <%= f.simple_fields_for :man_power do |builder| %>
+        <%= render('man_power', :f => builder)%>
+    <% end %>
     <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
     <%= f.button :submit, t('Save') , :class => BUTTONS_CLS['action'] %>
   <% end %>

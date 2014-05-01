@@ -3,7 +3,7 @@ require_dependency "resource_allocx/application_controller"
 module ResourceAllocx
   class AllocationsController < ApplicationController
     before_filter :require_employee
-    before_filter :load_record
+    before_filter :init_resource
 
 
     def index
@@ -11,6 +11,7 @@ module ResourceAllocx
       @allocations = params[:resource_allocx_allocations][:model_ar_r]
       @allocations = @allocations.where('resource_allocx_allocations.resource_id = ?', params[:resource_id]) if params[:resource_id].present?
       @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_string) = ?', params[:resource_string].strip) if params[:resource_string].present?
+      @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_category) = ?', params[:resource_category].strip) if params[:resource_category].present?
       @allocations = @allocations.page(params[:page]).per_page(@max_pagination)
       @erb_code = find_config_const('allocation_index_view', 'resource_allocx')
     end
@@ -20,7 +21,6 @@ module ResourceAllocx
       @allocation = ResourceAllocx::Allocation.new()
       @allocation.build_man_power
       @erb_code = find_config_const('allocation_new_view', 'resource_allocx')
-
     end
 
     def create
@@ -33,7 +33,6 @@ module ResourceAllocx
         @erb_code = find_config_const('allocation_new_view', 'resource_allocx')
         render 'new'
       end
-
     end
 
     def edit
@@ -63,11 +62,17 @@ module ResourceAllocx
 
     protected
 
-    def load_record
-      @resource_id = params[:resource_id] if params[:resource_id].present?
-      @resource_string = params[:resource_string] if params[:resource_string].present?
-      @resource_id = ResourceAllocx::Allocation.find_by_id(params[:id]).resource_id if params[:id].present?
-      @resource_string = ResourceAllocx::Allocation.find_by_id(params[:id]).resource_string if params[:id].present?
+    def init_resource
+      @resource_id = (ResourceAllocx::Allocation.find_by_id(params[:id]).resource_id if params[:id].present?)   ||
+                     params[:resource_id] if params[:resource_id].present?
+      @resource_string = (ResourceAllocx::Allocation.find_by_id(params[:id]).resource_string if params[:id].present?) ||
+                         params[:resource_string] if params[:resource_string].present?
+      @resource_category = (ResourceAllocx::Allocation.find_by_id(params[:id]).resource_category if params[:id].present?) ||
+                           params[:resource_category] if params[:resource_category].present?
+    end
+
+    def positions
+      @positions = @positions || find_config_const('allocation_positions_list', 'resource_allocx')
     end
 
   end

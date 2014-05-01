@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :resource_allocx_man_power, :class => 'ResourceAllocx::ManPower' do
     user_id 1
-    position_id 1
+    position "team leas"
   end
 end
 

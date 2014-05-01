@@ -14,9 +14,15 @@
   <%= @allocation.status.name if @allocation.status_id.present? %>
 </p>
 <p>
+  <b><%=t('Man Power')%>:</b>
+  <%= @allocation.man_power.user.name %>
+  <%= @allocation.man_power.position %>
+</p>
+<p>
   <b><%= t('Last Updated By') %></b>
   <%= @allocation.last_updated_by.name %>
 </p>
+
 
   <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

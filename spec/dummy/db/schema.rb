@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140423234933) do
+ActiveRecord::Schema.define(:version => 20140428022356) do
 
   create_table "authentify_engine_configs", :force => true do |t|
     t.string   "engine_name"
@@ -212,21 +212,6 @@ ActiveRecord::Schema.define(:version => 20140423234933) do
   add_index "commonx_misc_definitions", ["active"], :name => "index_commonx_misc_definitions_on_active"
   add_index "commonx_misc_definitions", ["for_which"], :name => "index_commonx_misc_definitions_on_for_which"
 
-  create_table "commonx_ruote_configs", :force => true do |t|
-    t.string   "engine_name"
-    t.string   "engine_version"
-    t.string   "argument_name"
-    t.text     "argument_value"
-    t.integer  "last_updated_by_id"
-    t.string   "brief_note"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-  end
-
-  add_index "commonx_ruote_configs", ["argument_name"], :name => "index_commonx_ruote_configs_on_argument_name"
-  add_index "commonx_ruote_configs", ["engine_name", "argument_name"], :name => "index_commonx_ruote_configs_on_engine_name_and_argument_name"
-  add_index "commonx_ruote_configs", ["engine_name"], :name => "index_commonx_ruote_configs_on_engine_name"
-
   create_table "commonx_search_stat_configs", :force => true do |t|
     t.string   "resource_name"
     t.text     "stat_function"
@@ -261,6 +246,12 @@ ActiveRecord::Schema.define(:version => 20140423234933) do
     t.datetime "updated_at",         :null => false
   end
 
+  add_index "resource_allocx_allocations", ["resource_category"], :name => "index_resource_allocx_allocations_on_resource_category"
+  add_index "resource_allocx_allocations", ["resource_id", "resource_string"], :name => "res_allocx_alllocations_id_string"
+  add_index "resource_allocx_allocations", ["resource_id"], :name => "index_resource_allocx_allocations_on_resource_id"
+  add_index "resource_allocx_allocations", ["resource_string"], :name => "index_resource_allocx_allocations_on_resource_string"
+  add_index "resource_allocx_allocations", ["status_id"], :name => "index_resource_allocx_allocations_on_status_id"
+
   create_table "resource_allocx_heavy_industries", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -268,7 +259,7 @@ ActiveRecord::Schema.define(:version => 20140423234933) do
 
   create_table "resource_allocx_man_powers", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "position_id"
+    t.string   "position"
     t.integer  "allocation_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false

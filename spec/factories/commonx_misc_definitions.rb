@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :commonx_misc_definition, :class => 'Commonx::MiscDefinition' do
     name "MyString"
     active false
-    for_which "task"
+    for_which "alloc_status"
     brief_note "MyText"
     last_updated_by_id 1
     ranking_index 1
