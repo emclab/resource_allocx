@@ -3,7 +3,9 @@
 <% else %>
 <%= simple_form_for @allocation do |f| %>    
 	  <%= f.input :name, :label => t('Resource Name') %>  
-	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
+	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 3} %>
+	  <%= f.input :start_date, :label => t('Start Date'), :as => :string, :readonly => readonly?(@allocation, 'start_date') %>
+      <%= f.input :end_date, :label => t('End Date'), :as => :string, :readonly => readonly?(@allocation, 'end_date') %>    
 	  <% if readonly?(@allocation, 'status_id')%>
 	    <%= f.input :status_noupdate, :label => t('Resource Status'), :input_html => {:value => @allocation.status.name} if @allocation.status_id.present? %>
 	    <%= f.input :status_noupdate, :label => t('Resource Status') if @allocation.status_id.blank? %>

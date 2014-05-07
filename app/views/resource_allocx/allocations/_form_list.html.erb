@@ -8,7 +8,6 @@
             <th>#</th>
 			<th><%= t('Name') %></th>
 			<th><%= t('Description') %></th>
-			<th><%= t('Resource Id') %></th>
 			<th><%= t('Status') %></th>
 			<th><%= t('Start') %></th>
 			<th><%= t('End') %></th>
@@ -24,10 +23,9 @@
             <% end %>
 		  	<td><%= r.name %></td>
 			<td><%= prt(r, :description) %></td>
-			<td><%= prt(r, :resource_id) %></td>
 			<td><%= t(prt(r, 'status.name')) %></td>
-			<td><%= prt(r, :start_date).to_date.to_s %></td>
-			<td><%= prt(r, :end_date).to_date.to_s %></td>
+			<td><%= prt(r, :start_date).strftime("%Y/%m/%d") if r.start_date.present? %></td>
+			<td><%= prt(r, :end_date).strftime("%Y/%m/%d") if r.end_date.present? %></td>
 			<td><%= prt(r, 'last_updated_by.name') %></td>    
 		    <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_allocation_path(r)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>
 		  </tr>
@@ -39,7 +37,7 @@
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <%= link_to t('New Allocation'), SUBURI + "/authentify/view_handler?index=1&url=#{new_allocation_path}", :class => BUTTONS_CLS['action'] if has_action_right?('create', params[:controller]) %>
+            <%= link_to t('New Allocation'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_allocation_path(resource_id: @resource_id, resource_string: @resource_string, resource_category: @resource_category)}", :class => BUTTONS_CLS['action'] if @resource_category && @resource_id && @resource_string && has_action_right?('create', params[:controller]) %>
 	    </th>
 	  </tr>
 	</table>

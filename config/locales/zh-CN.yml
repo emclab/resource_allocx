@@ -2,4 +2,40 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
   
 zh-CN:
-  resource_allocations : "Resource Allocations"
+  
+  #event_taskx
+  Resource Allocations  : '分配一览'
+  New Allocation  : '新分配'
+  Update Allocation : '更新分配'
+  Edit Allocation: '更新分配'
+  Allocation Info : '分配内容'
+  Name : '名称'
+  Successfully Saved! : '已保存！'
+  Successfully Updated! : '已更新！'
+  Data Error. Not Saved! : '数据错误。 无法保存！'
+  Data Error. Not Updated! : '数据错误。无法更新！'
+  'Note:' : '注释：'
+  Note : '注释'
+  Last Updated By         : '更改'  
+  'Yes' : '是'
+  'No'  : '否'
+  'yes' : '是'
+  'no'  : '否'
+  Duplicate Name!  : '名字重复！'
+  'Duplicate Name!'  : '名字重复！'
+  Cancel  : '取消'
+  Cancelled : '已取消'
+  Completed : '已完成' 
+  Requested By  : '申请'
+  Last Updated By : '更改'   
+  Start Date  : '开始日期'
+  Finish Date : '完成日期'
+  End Date : '结束日期'
+  Executioner : '执行人'
+  Expedite : '加急'
+  Delete  : '删除'
+  Save : '保存'
+  Start : '开始'
+  End : '结束'
+  Requested By : '发起人'
+  
