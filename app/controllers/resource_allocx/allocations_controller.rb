@@ -29,6 +29,7 @@ module ResourceAllocx
       if @allocation.save
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
       else
+        @erb_code = find_config_const('allocation_new_view', 'resource_allocx')
         flash[:notice] = t('Data Error. Not Saved!')
         render 'new'
       end
@@ -46,8 +47,8 @@ module ResourceAllocx
       if @allocation.update_attributes(params[:allocation], :as => :role_update)
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       else
-        flash[:notice] = t('Data Error. Not Saved!')
         @erb_code = find_config_const('allocation_edit_view', 'resource_allocx')
+        flash[:notice] = t('Data Error. Not Saved!')
         render 'edit'
       end
 
