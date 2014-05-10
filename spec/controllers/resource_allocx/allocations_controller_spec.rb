@@ -32,7 +32,7 @@ module ResourceAllocx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         manpower1 = FactoryGirl.create(:resource_allocx_man_power)
-        manpower2 = FactoryGirl.create(:resource_allocx_man_power)
+        manpower2 = FactoryGirl.create(:resource_allocx_man_power, :position => 'manager')
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 10, :resource_string => 'projectx/projects', :resource_category => 'man_power', :man_power => manpower1)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :name => 'a new allocation', :resource_id => 10, :resource_string => 'projectx/projects', :resource_category => 'man_power', :man_power => manpower2)
         get 'index', {:use_route => :resource_allocx}

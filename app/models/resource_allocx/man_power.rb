@@ -10,6 +10,7 @@ module ResourceAllocx
       belongs_to :allocation, :class_name => "ResourceAllocx::Allocation"
          
       validates_presence_of :user_id, :position
+      validates_uniqueness_of :position, :scope => :user_id
 
 
   end
