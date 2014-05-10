@@ -8,8 +8,8 @@ FactoryGirl.define do
     name "MyString"
     description "MyText"
     status_id 1
-    start_date "2013-10-02 15:59:52"
-    end_date "2013-10-02 15:59:52"
+    start_date "2013-10-02"
+    end_date "2013-10-02"
     last_updated_by_id 1
   end
 end

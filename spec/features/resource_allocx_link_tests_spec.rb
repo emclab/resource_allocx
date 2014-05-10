@@ -9,7 +9,7 @@ describe "LinkTests" do
       ug = FactoryGirl.create(:sys_user_group, :user_group_name => 'ceo', :group_type_id => type.id, :zone_id => z.id)
       @role = FactoryGirl.create(:role_definition)
       FactoryGirl.create(:user_access, :action => 'index', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
-                         :sql_code => nil)
+                         :sql_code => 'ResourceAllocx::Allocation.scoped')
       FactoryGirl.create(:user_access, :action => 'create', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
                          :sql_code => nil)
       FactoryGirl.create(:user_access, :action => 'update', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
@@ -26,8 +26,8 @@ describe "LinkTests" do
       FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'alloc_status', :name => 'vacation')
 
 
-      manpower1 = FactoryGirl.create(:resource_allocx_man_power, :user_id => @u.id)
-      @alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :last_updated_by_id => @u.id,
+      manpower1 = FactoryGirl.create(:resource_allocx_man_power, :user_id => @u.id, :position => 'team lead')
+      @alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects', :last_updated_by_id => @u.id,
                                   :man_power => manpower1)
 
       visit '/'
@@ -43,18 +43,45 @@ describe "LinkTests" do
     end
     
     it "should work with links on index page" do
-      visit allocations_path
+      visit allocations_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
+      save_and_open_page
       click_link 'New Allocation'
-      visit allocations_path
+      visit allocations_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
       click_link @alloc.id.to_s
       visit allocations_path
       click_link 'Edit'
+      select('not available', from: 'allocation_status_id')
+      click_button "Save"
+      save_and_open_page
+      #bad data
+      visit allocations_path
+      click_link 'Edit'
+      fill_in 'allocation_start_date' , :with => nil
+      click_button 'Save'
       save_and_open_page
     end
     
-    it "should display new allocation page" do
-      visit new_allocation_path
+    it "should display new allocation page and save new" do
+      visit allocations_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
+      save_and_open_page
+      click_link 'New Allocation'
       page.body.should have_content('New Allocation')
+      fill_in 'allocation_start_date' , :with => Date.today
+      fill_in 'allocation_name', with: 'amine c'
+      select('vacation', from: 'allocation_status_id')
+      select(@u.name, from: 'allocation_man_power_attributes_user_id')
+      select('team lead', from: 'allocation_man_power_attributes_position')
+      click_button 'Save'
+      save_and_open_page
+      #bad data
+      visit new_allocation_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
+      fill_in 'allocation_start_date' , :with => Date.today
+      fill_in 'allocation_name', with: 'a new name'
+      select('vacation', from: 'allocation_status_id')
+      select(@u.name, from: 'allocation_man_power_attributes_user_id')
+      #select('team lead', from: 'allocation_man_power_attributes_position')
+      click_button 'Save'
+      save_and_open_page #do you see can't blank after position?
       visit allocations_path
       save_and_open_page
     end

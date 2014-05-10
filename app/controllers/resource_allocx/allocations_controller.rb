@@ -9,9 +9,9 @@ module ResourceAllocx
     def index
       @title = t('Resource Allocations')
       @allocations = params[:resource_allocx_allocations][:model_ar_r]
-      @allocations = @allocations.where('resource_allocx_allocations.resource_id = ?', params[:resource_id]) if params[:resource_id].present?
-      @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_string) = ?', params[:resource_string].strip) if params[:resource_string].present?
-      @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_category) = ?', params[:resource_category].strip) if params[:resource_category].present?
+      @allocations = @allocations.where('resource_allocx_allocations.resource_id = ?', @resource_id) if @resource_id
+      @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_string) = ?', @resource_string) if @resource_string
+      @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_category) = ?', @resource_category) if @resource_category
       @allocations = @allocations.page(params[:page]).per_page(@max_pagination)
       @erb_code = find_config_const('allocation_index_view', 'resource_allocx')
     end
@@ -29,8 +29,8 @@ module ResourceAllocx
       if @allocation.save
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
       else
-        flash[:notice] = t('Data Error. Not Saved!')
         @erb_code = find_config_const('allocation_new_view', 'resource_allocx')
+        flash[:notice] = t('Data Error. Not Saved!')
         render 'new'
       end
     end
@@ -47,8 +47,8 @@ module ResourceAllocx
       if @allocation.update_attributes(params[:allocation], :as => :role_update)
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       else
-        flash[:notice] = t('Data Error. Not Saved!')
         @erb_code = find_config_const('allocation_edit_view', 'resource_allocx')
+        flash[:notice] = t('Data Error. Not Saved!')
         render 'edit'
       end
 
@@ -66,9 +66,9 @@ module ResourceAllocx
       @resource_id = (ResourceAllocx::Allocation.find_by_id(params[:id]).resource_id if params[:id].present?)   ||
                      params[:resource_id] if params[:resource_id].present?
       @resource_string = (ResourceAllocx::Allocation.find_by_id(params[:id]).resource_string if params[:id].present?) ||
-                         params[:resource_string] if params[:resource_string].present?
+                         params[:resource_string].strip if params[:resource_string].present?
       @resource_category = (ResourceAllocx::Allocation.find_by_id(params[:id]).resource_category if params[:id].present?) ||
-                           params[:resource_category] if params[:resource_category].present?
+                           params[:resource_category].strip if params[:resource_category].present?
     end
 
     def positions

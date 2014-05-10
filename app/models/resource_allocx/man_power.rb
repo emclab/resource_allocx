@@ -4,8 +4,6 @@ module ResourceAllocx
       attr_accessible :user_id, :position, :as => :role_new
       attr_accessible :user_id, :position, :as => :role_update
     
-      #attr_accessor :user, :user_name
-      
       belongs_to :user,  :class_name => 'Authentify::User'
       belongs_to :allocation, :class_name => "ResourceAllocx::Allocation"
          
