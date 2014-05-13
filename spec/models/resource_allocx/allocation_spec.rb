@@ -21,6 +21,11 @@ module ResourceAllocx
       c = FactoryGirl.build(:resource_allocx_allocation, :resource_id => nil)
       c.should_not be_valid
     end
+    
+    it "should reject 0 resource_id" do
+      c = FactoryGirl.build(:resource_allocx_allocation, :resource_id => 0)
+      c.should_not be_valid
+    end
 
     it "should reject nil resource_string" do
       c = FactoryGirl.build(:resource_allocx_allocation, :resource_string => nil)

@@ -9,6 +9,7 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
       t.datetime  :start_date
       t.datetime  :end_date
       t.integer   :status_id
+      t.boolean :active, :default => true
       t.integer :last_updated_by_id
       
       t.timestamps
