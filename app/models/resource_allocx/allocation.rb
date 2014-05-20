@@ -22,7 +22,7 @@ module ResourceAllocx
       def validate_uniquess_position_per_resource
         entries = ResourceAllocx::Allocation.where('resource_allocx_allocations.id <> ?', id).where(:resource_id => resource_id, :resource_string => resource_string).joins(:man_power).where(:resource_allocx_man_powers => {:position => man_power.position, :user_id => man_power.user_id}).all.size
         if entries > 0
-          errors.add(man_power.position, "Cannot assign the same user with same position on the same resource")
+          errors.add(man_power.position, I18n.t("Cannot assign the same user with same position on the same resource"))
         end
       end
   end

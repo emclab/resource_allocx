@@ -38,4 +38,4 @@ zh-CN:
   Start : '开始'
   End : '结束'
   Requested By : '发起人'
-  
+  Cannot assign the same user with same position on the same resource : '重复职位'
