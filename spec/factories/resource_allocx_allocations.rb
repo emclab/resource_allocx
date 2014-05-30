@@ -5,7 +5,8 @@ FactoryGirl.define do
     resource_id 1
     resource_string "MyString"
     resource_category "MyString"
-    name "MyString"
+    assigned_as "MyString"
+    detailed_resource_id 1
     description "MyText"
     status_id 1
     start_date "2013-10-02"

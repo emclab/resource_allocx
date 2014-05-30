@@ -2,8 +2,8 @@
 <h4><%=@title %></h4>
 
 <p>
-  <b><%= t('Name') %></b>
-  <%= @allocation.name %>
+  <b><%= t('Assigned As') %></b>
+  <%= @allocation.assigned_as %>
 </p>
 <p>
   <b><%= t('Description') %></b>
@@ -14,9 +14,8 @@
   <%= @allocation.status.name if @allocation.status_id.present? %>
 </p>
 <p>
-  <b><%=t('Man Power')%>:</b>
-  <%= @allocation.man_power.user.name %>
-  <%= @allocation.man_power.position %>
+  <b><%=t('Detailed Resource Id')%>:</b>
+  <%= @allocation.detailed_resource_id %>
 </p>
 <p>
   <b><%= t('Last Updated By') %></b>

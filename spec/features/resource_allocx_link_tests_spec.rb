@@ -25,10 +25,12 @@ describe "LinkTests" do
       FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'alloc_status', :name => 'not available')
       FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'alloc_status', :name => 'vacation')
 
+      FactoryGirl.create(:engine_config, :engine_name => 'resource_allocx', :engine_version => nil, :argument_name => 'allocation_resource_man_power', :argument_value => "Authentify::UsersHelper.return_users('create', params[:controller])")
+      FactoryGirl.create(:engine_config, :engine_name => 'resource_allocx', :engine_version => nil, :argument_name => 'allocation_positions_man_power', :argument_value => "team lead,workman,electricien")
+      FactoryGirl.create(:engine_config, :engine_name => 'resource_allocx', :engine_version => nil, :argument_name => 'allocation_resource_heavy_machine', :argument_value => "Authentify::UsersHelper.return_users('create', params[:controller])")
+      FactoryGirl.create(:engine_config, :engine_name => 'resource_allocx', :engine_version => nil, :argument_name => 'allocation_positions_heavy_machine', :argument_value => "machine1,machine2, machine3")
 
-      manpower1 = FactoryGirl.create(:resource_allocx_man_power, :user_id => @u.id, :position => 'team lead')
-      @alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects', :last_updated_by_id => @u.id,
-                                  :man_power => manpower1)
+      @alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, resource_category: 'man_power', :resource_id => 1, :resource_string => 'ext_construction_projectx/projects', :last_updated_by_id => @u.id, :detailed_resource_id => @u.id)
 
       visit '/'
       #login
@@ -43,18 +45,18 @@ describe "LinkTests" do
     end
     
     it "should work with links on index page" do
-      visit allocations_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
+      visit allocations_path(resource_category: 'man_power', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
       save_and_open_page
       click_link 'New Allocation'
-      visit allocations_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
+      visit allocations_path(resource_category: 'man_power', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
       click_link @alloc.id.to_s
-      visit allocations_path
+      visit allocations_path(resource_category: 'man_power', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
       click_link 'Edit'
       select('not available', from: 'allocation_status_id')
       click_button "Save"
       save_and_open_page
       #bad data
-      visit allocations_path
+      visit allocations_path(resource_category: 'man_power', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
       click_link 'Edit'
       fill_in 'allocation_start_date' , :with => nil
       click_button 'Save'
@@ -62,24 +64,24 @@ describe "LinkTests" do
     end
     
     it "should display new allocation page and save new" do
-      visit allocations_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
+      visit allocations_path(resource_category: 'man_power', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
       save_and_open_page
       click_link 'New Allocation'
       page.body.should have_content('New Allocation')
       fill_in 'allocation_start_date' , :with => Date.today
-      fill_in 'allocation_name', with: 'amine c'
+      fill_in 'allocation_description', with: 'engineer position'
       select('vacation', from: 'allocation_status_id')
-      select(@u.name, from: 'allocation_man_power_attributes_user_id')
-      select('team lead', from: 'allocation_man_power_attributes_position')
+      select(@u.name, from: 'allocation_detailed_resource_id')
+      #select('team lead', from: 'allocation_assigned_as')
       click_button 'Save'
       save_and_open_page
       #bad data
-      visit new_allocation_path(resource_category: 'Team Member', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
+      visit new_allocation_path(resource_category: 'man_power', resource_id: 1, resource_string: 'ext_construction_projectx/projects')
       fill_in 'allocation_start_date' , :with => Date.today
-      fill_in 'allocation_name', with: 'a new name'
+      fill_in 'allocation_description', with: 'a new description'
       select('vacation', from: 'allocation_status_id')
-      select(@u.name, from: 'allocation_man_power_attributes_user_id')
-      #select('team lead', from: 'allocation_man_power_attributes_position')
+      select(@u.name, from: 'allocation_detailed_resource_id')
+      #select('team lead', from: 'allocation_assigned_as')
       click_button 'Save'
       save_and_open_page #do you see can't blank after position?
       visit allocations_path

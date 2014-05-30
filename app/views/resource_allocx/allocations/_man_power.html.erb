@@ -1,2 +1,0 @@
-    <%= f.input :user_id, :label => t('User'), :collection => Authentify::UsersHelper.return_users('create', params[:controller]), :include_blank => true %>
-    <%= f.input :position, :label => t('Position'), :collection => find_config_const('man_power_position', 'resource_allocx').split(','), :include_blank => true %>

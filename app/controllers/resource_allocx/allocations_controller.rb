@@ -3,7 +3,7 @@ require_dependency "resource_allocx/application_controller"
 module ResourceAllocx
   class AllocationsController < ApplicationController
     before_filter :require_employee
-    before_filter :init_resource
+    before_filter :init_resource, :resources, :positions, :all_resource_categories
 
 
     def index
@@ -19,7 +19,6 @@ module ResourceAllocx
     def new
       @title = t('New Allocation')
       @allocation = ResourceAllocx::Allocation.new()
-      @allocation.build_man_power
       @erb_code = find_config_const('allocation_new_view', 'resource_allocx')
     end
 
@@ -72,7 +71,21 @@ module ResourceAllocx
     end
 
     def positions
-      @positions = @positions || find_config_const('allocation_positions_list', 'resource_allocx')
+      if session[:resource_category]
+        @positions = find_config_const('allocation_positions_' + session[:resource_category], 'resource_allocx')
+        @positions = @positions.split(",")  if @positions
+      end
+    end
+
+    def resources
+      if session[:resource_category]
+        @resource_list = find_config_const('allocation_resource_' + session[:resource_category], 'resource_allocx')
+        @resource_list = eval(@resource_list) if @resource_list
+      end
+    end
+
+    def all_resource_categories
+      @all_resource_categories = @all_resource_categories || ResourceAllocx::AllocationsHelper.all_resource_categories()
     end
 
   end

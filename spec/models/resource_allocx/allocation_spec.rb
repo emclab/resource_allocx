@@ -3,38 +3,32 @@ require 'spec_helper'
 module ResourceAllocx
   describe Allocation do
     it "should be OK" do
-      manpower = FactoryGirl.build(:resource_allocx_man_power)
-      c = FactoryGirl.build(:resource_allocx_allocation, :man_power => manpower)
+      c = FactoryGirl.build(:resource_allocx_allocation, :assigned_as => 'engineer')
       c.should be_valid
     end
 
-    it "should reject nil name" do
-      manpower = FactoryGirl.build(:resource_allocx_man_power)
-      c = FactoryGirl.build(:resource_allocx_allocation, :name => nil, :man_power => manpower)
+    it "should reject nil assigned_as" do
+      c = FactoryGirl.build(:resource_allocx_allocation, :assigned_as => nil)
       c.should_not be_valid
     end
 
     it "should reject nil resource_category" do
-      manpower = FactoryGirl.build(:resource_allocx_man_power)
-      c = FactoryGirl.build(:resource_allocx_allocation, :resource_category => nil, :man_power => manpower)
+      c = FactoryGirl.build(:resource_allocx_allocation, :resource_category => nil)
       c.should_not be_valid
     end
 
     it "should reject nil resource_id" do
-      manpower = FactoryGirl.build(:resource_allocx_man_power)
-      c = FactoryGirl.build(:resource_allocx_allocation, :resource_id => nil, :man_power => manpower)
+      c = FactoryGirl.build(:resource_allocx_allocation, :resource_id => nil)
       c.should_not be_valid
     end
     
     it "should reject 0 resource_id" do
-      manpower = FactoryGirl.build(:resource_allocx_man_power)
-      c = FactoryGirl.build(:resource_allocx_allocation, :resource_id => 0, :man_power => manpower)
+      c = FactoryGirl.build(:resource_allocx_allocation, :resource_id => 0)
       c.should_not be_valid
     end
 
     it "should reject nil resource_string" do
-      manpower = FactoryGirl.build(:resource_allocx_man_power)
-      c = FactoryGirl.build(:resource_allocx_allocation, :resource_string => nil, :man_power => manpower)
+      c = FactoryGirl.build(:resource_allocx_allocation, :resource_string => nil)
       c.should_not be_valid
     end
 

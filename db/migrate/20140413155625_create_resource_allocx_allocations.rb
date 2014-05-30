@@ -4,14 +4,15 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
       t.integer   :resource_id
       t.string    :resource_string
       t.string    :resource_category
-      t.string    :name
+      t.string    :assigned_as
+      t.integer   :detailed_resource_id
       t.text      :description
       t.datetime  :start_date
       t.datetime  :end_date
       t.integer   :status_id
-      t.boolean :active, :default => true
-      t.integer :last_updated_by_id
-      
+      t.boolean   :active, :default => true
+      t.integer   :last_updated_by_id
+
       t.timestamps
     end
 

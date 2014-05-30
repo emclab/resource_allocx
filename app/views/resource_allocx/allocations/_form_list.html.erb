@@ -6,7 +6,7 @@
     <table class="table table-striped">
 		<tr>
             <th>#</th>
-			<th><%= t('Name') %></th>
+			<th><%= t('Assigned As') %></th>
 			<th><%= t('Description') %></th>
 			<th><%= t('Status') %></th>
 			<th><%= t('Start') %></th>
@@ -21,7 +21,7 @@
             <% else %>
                 <td><%= r.id %></td>
             <% end %>
-		  	<td><%= r.name %></td>
+		  	<td><%= r.assigned_as %></td>
 			<td><%= prt(r, :description) %></td>
 			<td><%= t(prt(r, 'status.name')) %></td>
 			<td><%= prt(r, :start_date).strftime("%Y/%m/%d") if r.start_date.present? %></td>
