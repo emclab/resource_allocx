@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   mount ResourceAllocx::Engine => "/resource_allocx"
   mount Authentify::Engine => "/authentify"
   mount Commonx::Engine => "/commonx"
+  mount SwModuleInfox::Engine => '/engine'
+  mount Searchx::Engine  => '/search'
   
   resource :session
   

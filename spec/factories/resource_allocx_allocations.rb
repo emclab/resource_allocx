@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :resource_allocx_allocation, :class => 'ResourceAllocx::Allocation' do
     resource_id 1
     resource_string "MyString"
-    resource_category "MyString"
+    detailed_resource_category "MyString"
     assigned_as "MyString"
     detailed_resource_id 1
     description "MyText"

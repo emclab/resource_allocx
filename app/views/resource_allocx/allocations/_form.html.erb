@@ -5,14 +5,15 @@
 	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 3} %>
 	  <%= f.input :start_date, :label => t('Start Date'), :as => :string, :readonly => readonly?(@allocation, 'start_date') %>
       <%= f.input :end_date, :label => t('End Date'), :as => :string, :readonly => readonly?(@allocation, 'end_date') %>    
-	  <% if readonly?(@allocation, 'status_id')%>
-	    <%= f.input :status_noupdate, :label => t('Resource Status'), :input_html => {:value => @allocation.status.name} if @allocation.status_id.present? %>
-	    <%= f.input :status_noupdate, :label => t('Resource Status') if @allocation.status_id.blank? %>
+	  <% if readonly?(@allocation, 'active')%>
+	    <%= f.input :active_noupdate, :label => t('Active'), :input_html => {:value => (@allocation.active ? t('Yes') : t('No'))} %>
 	  <% else %>
-	    <%= f.input :status_id, :label => t('Resource Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'alloc_status'), :include_blank => true %>
+	    <%= f.input :active, :label => t('Active'), :collection => [[t('Yes'), true], [t('No'), false]], :include_blank => true %>
 	  <% end %>
-      <%= f.input :detailed_resource_id, :label => t('Detailed Resource'), :collection => @resource_list, :include_blank => true %>
+      <%= f.input :detailed_resource_id, :label => t('User'), :collection => Authentify::UsersHelper.return_users('index', 'info_service_projectx/projects') unless readonly?(@allocation, 'detailed_resource_id') %>
+      <%= f.input :detailed_resource_noupdate, :label => t('User'), :readonly => true, :input_html => {:value => Authentify::User.find_by_id(@allocation.detailed_resource_id).name} if readonly?(@allocation, 'detailed_resource_id') %>
       <%= f.input :assigned_as, :label => t('Assigned As'), :collection => @positions, :include_blank => true %>
+      
       <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
 	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
 <% end %>  
