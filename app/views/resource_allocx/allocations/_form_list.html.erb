@@ -37,7 +37,10 @@
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <%= link_to t('New Allocation'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_allocation_path(resource_id: @resource_id, resource_string: @resource_string, resource_category: @resource_category)}", :class => BUTTONS_CLS['action'] if @resource_category && @resource_id && @resource_string && has_action_right?('create', params[:controller]) %>
+            <%= link_to t('New Allocation'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_allocation_path(resource_id: @resource_id, resource_string: @resource_string, detailed_resource_category: @detailed_resource_category)}", :class => BUTTONS_CLS['action'] if @detailed_resource_category && @resource_id && @resource_string && has_action_right?('create', params[:controller]) %>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to t('New Allocation'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_allocation_path(resource_id: @resource_id, resource_string: @resource_string, detailed_resource_category: @detailed_resource_category, subaction: @detailed_resource_category)}", :class => BUTTONS_CLS['action'] if @detailed_resource_category && @resource_id && @resource_string && has_action_right?('create_' + @detailed_resource_category, params[:controller]) %>
+	  
 	    </th>
 	  </tr>
 	</table>

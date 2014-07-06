@@ -13,6 +13,8 @@ gem "will_paginate"
 #gem 'commonx', :git => 'http://github.com/emclab/commonx.git'
 gem 'authentify', :path => '../authentify'  #for rspec test
 gem 'commonx', :path => '../commonx'
+gem 'sw_module_infox', :path => '../sw_module_infox'
+gem 'searchx', :path => '../searchx'
 
 
 # Declare any dependencies that are still in development here instead of in

@@ -3,8 +3,8 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
     create_table :resource_allocx_allocations do |t|
       t.integer   :resource_id
       t.string    :resource_string
-      t.string    :resource_category
-      t.string    :assigned_as
+      t.string    :detailed_resource_category
+      t.string    :assigned_as  #for man power, like sales, project manager.
       t.integer   :detailed_resource_id
       t.text      :description
       t.datetime  :start_date
@@ -19,7 +19,8 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
     add_index :resource_allocx_allocations, [:resource_id, :resource_string], :name => 'res_allocx_alllocations_id_string'
     add_index :resource_allocx_allocations, :resource_id
     add_index :resource_allocx_allocations, :resource_string
-    add_index :resource_allocx_allocations, :status_id
-    add_index :resource_allocx_allocations, :resource_category
+    add_index :resource_allocx_allocations, :active
+    add_index :resource_allocx_allocations, :detailed_resource_category
+    add_index :resource_allocx_allocations, :detailed_resource_id
   end
 end
