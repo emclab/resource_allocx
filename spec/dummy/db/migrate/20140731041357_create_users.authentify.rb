@@ -18,7 +18,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :allow_text_msg, :default => false
       t.boolean :allow_email, :default => false
       t.integer :customer_id
-      
+      t.string :local
     end
     
     add_index :authentify_users, :name

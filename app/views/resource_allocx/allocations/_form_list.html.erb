@@ -23,7 +23,7 @@
             <% end %>
 		  	<td><%= r.assigned_as %></td>
 			<td><%= prt(r, :description) %></td>
-			<td><%= t(prt(r, 'status.name')) %></td>
+			<td><%= t(prt(r, 'status.name')) if r.status_id.present? %></td>
 			<td><%= prt(r, :start_date).strftime("%Y/%m/%d") if r.start_date.present? %></td>
 			<td><%= prt(r, :end_date).strftime("%Y/%m/%d") if r.end_date.present? %></td>
 			<td><%= prt(r, 'last_updated_by.name') %></td>    

@@ -12,8 +12,8 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
       t.integer   :status_id
       t.boolean   :active, :default => true
       t.integer   :last_updated_by_id
-
       t.timestamps
+      t.boolean :show_to_customer
     end
 
     add_index :resource_allocx_allocations, [:resource_id, :resource_string], :name => 'res_allocx_alllocations_id_string'
