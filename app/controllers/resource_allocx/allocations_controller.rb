@@ -3,7 +3,8 @@ require_dependency "resource_allocx/application_controller"
 module ResourceAllocx
   class AllocationsController < ApplicationController
     before_filter :require_employee
-    before_filter :init_resource, :assigned_positions
+    before_filter :init_resource
+    before_filter :assigned_positions, :only => [:new, :edit]
 
 
     def index
@@ -76,7 +77,7 @@ module ResourceAllocx
 
     def assigned_positions      
       @positions = find_config_const('allocation_assigned_position_' + @detailed_resource_category, 'resource_allocx') if @detailed_resource_category
-      @positions = @positions.split(',').map(&:strip) if @positions      
+      @positions = @positions.split(',').map{|x| [  I18n.t(x.strip.humanize.titleize) , x.strip  ] } if @positions      
     end
 
   end
