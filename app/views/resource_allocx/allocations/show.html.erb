@@ -32,7 +32,10 @@
 
 
   <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
-  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <%= link_to t('Delete'), allocation_path(@allocation), :method => :delete, :confirm => I18n.t('Delete the record?'), :class => BUTTONS_CLS['action'] if has_action_right?('destroy', params[:controller], @allocation) %>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <%= link_to t('Delete'), allocation_path(@allocation, :subation => @allocation.detailed_resource_category), :method => :delete, :confirm => I18n.t('Delete the record?'), :class => BUTTONS_CLS['action'] if has_action_right?('destroy_' + @allocation.detailed_resource_category, params[:controller], @allocation) %>
 </div>
 
 <% end %>

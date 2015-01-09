@@ -31,7 +31,7 @@ describe "LinkTests" do
       FactoryGirl.create(:engine_config, :engine_name => 'resource_allocx', :engine_version => nil, :argument_name => 'allocation_positions_heavy_machine', :argument_value => "machine1,machine2, machine3")
       
       @engine = FactoryGirl.create(:sw_module_infox_module_info)
-      @alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, detailed_resource_category: 'man_power', :resource_id => @engine.id, :resource_string => 'sw_module_infox/module_infos', :last_updated_by_id => @u.id, :detailed_resource_id => @u.id)
+      @alloc = FactoryGirl.create(:resource_allocx_allocation, assigned_as: 'a man power A', :status_id => @alloc_status.id, detailed_resource_category: 'man_power', :resource_id => @engine.id, :resource_string => 'sw_module_infox/module_infos', :last_updated_by_id => @u.id, :detailed_resource_id => @u.id)
 
       visit '/'
       #login
@@ -41,13 +41,22 @@ describe "LinkTests" do
     end
     
     it "should display allocations index page" do
+      FactoryGirl.create(:user_access, :action => 'destroy_' + @alloc.detailed_resource_category, :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
+                         :sql_code => "")
       visit allocations_path(:detailed_resource_category => @alloc.detailed_resource_category)
+      save_and_open_page
       page.body.should have_content('Allocations')
+      click_link @alloc.id
+      page.should have_content('Allocation Info')
+      page.should have_content('Delete')
+      #click_link 'Delete' #there is a confirmation 
+      #visit allocations_path(:detailed_resource_category => @alloc.detailed_resource_category)
+      #page.should_not have_content('a man power A')
     end
     
     it "should work with links on index page" do
       visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
-      save_and_open_page
+      #save_and_open_page
       click_link 'New Allocation'
       visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
       click_link @alloc.id.to_s
@@ -69,7 +78,7 @@ describe "LinkTests" do
       visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
       save_and_open_page
       click_link 'New Allocation'
-      save_and_open_page
+      #save_and_open_page
       page.body.should have_content('New Allocation')
       fill_in 'allocation_start_date' , :with => Date.today
       fill_in 'allocation_description', with: 'engineer position'

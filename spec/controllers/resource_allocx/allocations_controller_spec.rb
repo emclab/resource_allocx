@@ -191,6 +191,19 @@ module ResourceAllocx
         response.should be_success
       end
     end
+    
+    describe "Destroy" do
+      it "should destroy" do
+        user_access = FactoryGirl.create(:user_access, :action => 'destroy', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "")
+        session[:user_id] = @u.id
+        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
+        engine = FactoryGirl.create(:sw_module_infox_module_info)
+        alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => engine.id, :resource_string => 'sw_module_infox/module_infos')
+        get 'destroy', {:use_route => :resource_allocx, :id => alloc.id}
+        response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!") 
+      end
+    end
 
   end
 end

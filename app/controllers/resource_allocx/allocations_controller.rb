@@ -63,6 +63,11 @@ module ResourceAllocx
       @allocation = ResourceAllocx::Allocation.find(params[:id])
       @erb_code = find_config_const('allocation_show_view_' + @allocation.detailed_resource_category, 'resource_allocx')
     end
+    
+    def destroy  
+      ResourceAllocx::Allocation.delete(params[:id].to_i)
+      redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
+    end
 
     protected
     

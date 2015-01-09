@@ -14,6 +14,7 @@ zh-CN:
   Successfully Updated! : '已更新！'
   Data Error. Not Saved! : '数据错误。 无法保存！'
   Data Error. Not Updated! : '数据错误。无法更新！'
+  Successfully Deleted! : '已删除！'
   'Note:' : '注释：'
   Note : '注释'
   Last Updated By         : '更改'  
@@ -54,3 +55,6 @@ zh-CN:
   Active : '有效'
   User : '用户名'
   Developer : '技术开发'
+  Delete the record? : '删除？'
+  New Team Member : '加人员'
+  
