@@ -43,6 +43,12 @@ module ResourceAllocx
       c = FactoryGirl.build(:resource_allocx_allocation, :active => true, :resource_id => c1.resource_id + 1)
       c.should be_valid
     end
+    
+    it "should not take duplicate assigned_as for the same resource" do
+      c1 = FactoryGirl.create(:resource_allocx_allocation, :assigned_as => 'true')
+      c = FactoryGirl.build(:resource_allocx_allocation, :assigned_as => 'True')
+      c.should_not be_valid
+    end
 
   end
 end
