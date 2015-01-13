@@ -51,6 +51,8 @@ zh-CN:
   Buyer : '采购'
   Warehouseman : '仓库保管'
   Construction Foreman : '施工员'
+  Buyer Assistant : '采购助理'
+  Project Assistant : '项目助理'
   Not be blank : '不能为空'
   Active : '有效'
   User : '用户名'
