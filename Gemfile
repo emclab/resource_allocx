@@ -6,8 +6,11 @@ source "http://rubygems.org"
 gemspec
 
 # jquery-rails is used by the dummy application
-gem "jquery-rails", "~> 2.3.0"
+gem "jquery-rails"
 gem "will_paginate"
+gem 'tzinfo-data', platforms: [:mingw_20, :mingw, :mswin]
+gem 'protected_attributes'  #for rails 4
+gem 'factory_girl_rails' #rails 4.2
 
 #gem 'authentify', :git => 'http://github.com/emclab/authentify.git'
 #gem 'commonx', :git => 'http://github.com/emclab/commonx.git'

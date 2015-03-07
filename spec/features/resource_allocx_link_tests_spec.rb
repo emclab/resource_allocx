@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "LinkTests" do
+RSpec.describe "LinkTests", type: :request do
   describe "GET /resource_allocx_link_tests" do
     before(:each) do
       @pagination_config = FactoryGirl.create(:engine_config, :engine_name => nil, :engine_version => nil, :argument_name => 'pagination', :argument_value => 30)
@@ -43,31 +43,31 @@ describe "LinkTests" do
     it "should display allocations index page" do
       FactoryGirl.create(:user_access, :action => 'destroy_' + @alloc.detailed_resource_category, :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
                          :sql_code => "")
-      visit allocations_path(:detailed_resource_category => @alloc.detailed_resource_category)
+      visit resource_allocx.allocations_path(:detailed_resource_category => @alloc.detailed_resource_category)
       save_and_open_page
-      page.body.should have_content('Allocations')
+      expect(page).to have_content('Allocations')
       click_link @alloc.id
-      page.should have_content('Allocation Info')
-      page.should have_content('Delete')
+      expect(page).to have_content('Allocation Info')
+      expect(page).to have_content('Delete')
       #click_link 'Delete' #there is a confirmation 
-      #visit allocations_path(:detailed_resource_category => @alloc.detailed_resource_category)
-      #page.should_not have_content('a man power A')
+      #visit resource_allocx.allocations_path(:detailed_resource_category => @alloc.detailed_resource_category)
+      #expect(page).not_to have_content('a man power A')
     end
     
     it "should work with links on index page" do
-      visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
+      visit resource_allocx.allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
       #save_and_open_page
       click_link 'New Allocation'
-      visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
+      visit resource_allocx.allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
       click_link @alloc.id.to_s
-      visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
+      visit resource_allocx.allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
       click_link 'Edit'
       #select('not available', from: 'allocation_status_id')
       fill_in 'allocation_description', :with => 'new new'
       click_button "Save"
       save_and_open_page
       #bad data
-      visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
+      visit resource_allocx.allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
       click_link 'Edit'
       select('', from: 'allocation_detailed_resource_id')
       click_button 'Save'
@@ -75,11 +75,11 @@ describe "LinkTests" do
     end
     
     it "should display new allocation page and save new" do
-      visit allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
+      visit resource_allocx.allocations_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'sw_module_infox/module_infos')
       save_and_open_page
       click_link 'New Allocation'
       #save_and_open_page
-      page.body.should have_content('New Allocation')
+      expect(page).to have_content('New Allocation')
       fill_in 'allocation_start_date' , :with => Date.today
       fill_in 'allocation_description', with: 'engineer position'
       select('vacation', from: 'allocation_status_id')
@@ -96,14 +96,14 @@ describe "LinkTests" do
       #select('team lead', from: 'allocation_assigned_as')
       click_button 'Save'
       #save_and_open_page #do you see can't blank after position?
-      visit allocations_path(:detailed_resource_category => 'man_power')
-      page.should have_content('a new description')
+      visit resource_allocx.allocations_path(:detailed_resource_category => 'man_power')
+      expect(page).to have_content('a new description')
       #save_and_open_page
     end
     
     it "should display edit allocation page" do
       visit edit_allocation_path(@alloc)
-      page.body.should have_content('Edit Allocation')
+      expect(page).to have_content('Edit Allocation')
       
     end
   end

@@ -16,20 +16,20 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", ">=3.2.12"
+  s.add_dependency "rails", ">=4.2.0"
   s.add_dependency "jquery-rails"
   s.add_dependency "simple_form"
   s.add_dependency "will_paginate"
   s.add_dependency "database_cleaner"
   s.add_dependency "execjs"
-
-  s.add_dependency "sass-rails", '~>3.2.3'
-  s.add_dependency "coffee-rails", '~>3.2.1'   
+  s.add_dependency 'protected_attributes'
+  s.add_dependency "sass-rails", '~>5.0.1'
+  s.add_dependency "coffee-rails", '~>4.1.0'   
   s.add_dependency "uglifier"
 
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rspec-rails", ">= 2.0.0"
-  s.add_development_dependency "factory_girl_rails" #, '~>3.0'
+  s.add_development_dependency "rspec-rails", ">= 3.2.0"
+  s.add_development_dependency "factory_girl_rails" , '~>4.5'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'launchy'   #with capybara
 end

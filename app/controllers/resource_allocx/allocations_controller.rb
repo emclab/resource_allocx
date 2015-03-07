@@ -2,9 +2,9 @@ require_dependency "resource_allocx/application_controller"
 
 module ResourceAllocx
   class AllocationsController < ApplicationController
-    before_filter :require_employee
-    before_filter :init_resource
-    before_filter :assigned_positions, :only => [:new, :edit]
+    before_action :require_employee
+    before_action :init_resource
+    before_action :assigned_positions, :only => [:new, :edit]
 
 
     def index
