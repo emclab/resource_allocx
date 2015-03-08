@@ -9,7 +9,7 @@ RSpec.describe "LinkTests", type: :request do
       ug = FactoryGirl.create(:sys_user_group, :user_group_name => 'ceo', :group_type_id => type.id, :zone_id => z.id)
       @role = FactoryGirl.create(:role_definition)
       FactoryGirl.create(:user_access, :action => 'index', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
-                         :sql_code => 'ResourceAllocx::Allocation.scoped')
+                         :sql_code => 'ResourceAllocx::Allocation.all')
       FactoryGirl.create(:user_access, :action => 'create', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
                          :sql_code => nil)
       FactoryGirl.create(:user_access, :action => 'update', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
@@ -88,7 +88,7 @@ RSpec.describe "LinkTests", type: :request do
       click_button 'Save'
       #save_and_open_page
       #bad data
-      visit new_allocation_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'ext_construction_projectx/projects')
+      visit resource_allocx.new_allocation_path(detailed_resource_category: 'man_power', resource_id: @engine.id, resource_string: 'ext_construction_projectx/projects')
       fill_in 'allocation_start_date' , :with => Date.today
       fill_in 'allocation_description', with: 'a new description'
       select('vacation', from: 'allocation_status_id')
@@ -102,7 +102,7 @@ RSpec.describe "LinkTests", type: :request do
     end
     
     it "should display edit allocation page" do
-      visit edit_allocation_path(@alloc)
+      visit resource_allocx.edit_allocation_path(@alloc)
       expect(page).to have_content('Edit Allocation')
       
     end

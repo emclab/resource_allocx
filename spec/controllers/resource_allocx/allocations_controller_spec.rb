@@ -2,6 +2,7 @@ require 'rails_helper'
 
 module ResourceAllocx
   RSpec.describe AllocationsController, type: :controller do
+    routes {ResourceAllocx::Engine.routes}
     before(:each) do
       expect(controller).to receive(:require_signin)
       expect(controller).to receive(:require_employee)
@@ -43,7 +44,7 @@ module ResourceAllocx
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 10, :resource_string => 'projectx/projects', :detailed_resource_category => 'man_power', :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :resource_id => 10, :resource_string => 'projectx/projects', :detailed_resource_category => 'man_power', :detailed_resource_id => @u2.id)
         get 'index', {detailed_resource_category: 'man_power'}
-        expect(:allocations).to match_array([alloc1, alloc2])
+        expect(assigns(:allocations)).to match_array([alloc1, alloc2])
       end
       
       it "should only return the allocation for a given detailed_resource_category (e.g project)" do
@@ -54,7 +55,7 @@ module ResourceAllocx
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_string => 'projectx/projects', :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :detailed_resource_id => @u2.id)
         get 'index', {:resource_string => 'projectx/projects', detailed_resource_category: 'man_power'}
-        expect(:allocations).to match_array([])
+        expect(assigns(:allocations)).to match_array([])
       end
       
       it "should only return the allocation for a given resource_id (e.g project)" do
@@ -65,7 +66,7 @@ module ResourceAllocx
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :detailed_resource_id => @u2.id)
         get 'index', {:resource_id => 100, detailed_resource_category: alloc1.detailed_resource_category}
-        expect(:allocations).to match_array([alloc1])
+        expect(assigns(:allocations)).to match_array([alloc1])
       end
       
       it "should only return the allocation for a given resource_id and resource_string" do
@@ -76,7 +77,7 @@ module ResourceAllocx
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :resource_string => 'projectx/projects', :resource_id => 100, :detailed_resource_id => @u2.id)
         get 'index', {:resource_string => 'projectx/projects', :resource_id => 100, detailed_resource_category: alloc2.detailed_resource_category}
-        expect(:allocations).to match_array([alloc2])
+        expect(assigns(:allocations)).to match_array([alloc2])
       end
       
     end
