@@ -16,7 +16,7 @@ module ResourceAllocx
     validates :resource_string, :detailed_resource_category, :detailed_resource_id, :presence => true
     validates :resource_id, :last_updated_by_id, :detailed_resource_id, :presence => true, :numericality => {:only_integer => true, :greater_than => 0}
     validates :detailed_resource_id, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :active]}, :if => 'active == true'
-    #validates :assigned_as, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category], :case_sensitive => false}, :if => 'assigned_as.present?'
+    #validates :assigned_as, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :detailed_resource_id], :case_sensitive => false}, :if => 'assigned_as.present?'
     validate :dynamic_validate
       
     def dynamic_validate
