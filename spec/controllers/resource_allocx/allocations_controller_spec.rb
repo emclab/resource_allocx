@@ -40,7 +40,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "ResourceAllocx::Allocation.order('created_at DESC')")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 10, :resource_string => 'projectx/projects', :detailed_resource_category => 'man_power', :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :resource_id => 10, :resource_string => 'projectx/projects', :detailed_resource_category => 'man_power', :detailed_resource_id => @u2.id)
         get 'index', {detailed_resource_category: 'man_power'}
@@ -51,7 +50,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "ResourceAllocx::Allocation.order('created_at DESC')")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_string => 'projectx/projects', :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :detailed_resource_id => @u2.id)
         get 'index', {:resource_string => 'projectx/projects', detailed_resource_category: 'man_power'}
@@ -62,7 +60,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "ResourceAllocx::Allocation.order('created_at DESC')")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :detailed_resource_id => @u2.id)
         get 'index', {:resource_id => 100, detailed_resource_category: alloc1.detailed_resource_category}
@@ -73,7 +70,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "ResourceAllocx::Allocation.order('created_at DESC')")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :detailed_resource_id => @u.id)
         alloc2 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :assigned_as => 'a new allocation', :resource_string => 'projectx/projects', :resource_id => 100, :detailed_resource_id => @u2.id)
         get 'index', {:resource_string => 'projectx/projects', :resource_id => 100, detailed_resource_category: alloc2.detailed_resource_category}
@@ -86,7 +82,6 @@ module ResourceAllocx
       it "bring up new page with allocation" do
         FactoryGirl.create(:user_access, :action => 'create', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1, :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         get 'new' , {:detailed_resource_category => 'man_power' }
         expect(response).to be_success
         #assigns[:resourse_category].should eq('production')
@@ -96,7 +91,6 @@ module ResourceAllocx
         FactoryGirl.create(:user_access, :action => 'create', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
                                          :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         #manpower1 = FactoryGirl.attributes_for(:resource_allocx_man_power)
         alloc = FactoryGirl.attributes_for(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :resource_string => 'projectx/projects')
         get 'new' , {:allocation => alloc, :detailed_resource_category => 'man_power'}
@@ -114,7 +108,6 @@ module ResourceAllocx
         session[:employee] = true
         session[:user_id] = @u.id
         session[:detailed_resource_category] = 'man_power'
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc = FactoryGirl.attributes_for(:resource_allocx_allocation, :status_id => @alloc_status.id, :detailed_resource_category => 'man_power', :resource_id => 100, :resource_string => 'projectx/projects')
         get 'create', {:allocation => alloc}
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
@@ -126,7 +119,6 @@ module ResourceAllocx
         session[:employee] = true
         session[:user_id] = @u.id
         session[:detailed_resource_category] = 'man_power'
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 99, :resource_string => 'projectx/xyz')
         alloc2 = FactoryGirl.attributes_for(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :resource_string => 'projectx/projects')
         get 'create', {:allocation => alloc2}
@@ -138,7 +130,6 @@ module ResourceAllocx
         :sql_code => "")
         session[:user_id] = @u.id
         session[:detailed_resource_category] = 'man_power'
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc = FactoryGirl.attributes_for(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => nil, :resource_string => 'projectx/projects')
         get 'create', {:allocation => alloc}
         expect(response).to render_template('new')
@@ -150,7 +141,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource => 'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :resource_string => 'projectx/projects')
         get 'edit', {:id => alloc.id}
         expect(response).to be_success
@@ -163,7 +153,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100)
         get 'update', {:id => alloc.id, :allocation => {:assigned_as => 'xyz'}}
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
@@ -173,7 +162,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100)
         get 'update', {:id => alloc.id, :allocation => {:detailed_resource_id => 0}}
         expect(response).to render_template('edit')
@@ -185,7 +173,6 @@ module ResourceAllocx
         FactoryGirl.create(:user_access, :action => 'show', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         engine = FactoryGirl.create(:sw_module_infox_module_info)
         alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => engine.id, :resource_string => 'sw_module_infox/module_infos')
         get 'show', {:id => alloc.id}
@@ -198,7 +185,6 @@ module ResourceAllocx
         user_access = FactoryGirl.create(:user_access, :action => 'destroy', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         engine = FactoryGirl.create(:sw_module_infox_module_info)
         alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => engine.id, :resource_string => 'sw_module_infox/module_infos')
         get 'destroy', {:id => alloc.id}
