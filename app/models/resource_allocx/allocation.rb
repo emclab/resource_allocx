@@ -2,13 +2,14 @@ module ResourceAllocx
   class Allocation < ActiveRecord::Base
       
     attr_accessor :status_name, :active_noupdate, :last_updated_by_name, :detailed_resource_noupdate, :show_to_customer_noupdate
+=begin
     attr_accessible :resource_id, :resource_string, :detailed_resource_category, :assigned_as, :description, :start_date, :end_date, :status_id,
                     :last_updated_by_id, :detailed_resource_id, :active, :show_to_customer,
                     :as => :role_new
     attr_accessible :assigned_as, :description, :start_date, :end_date, :status_id, :last_updated_by_id, :show_to_customer,
                     :detailed_resource_id, :active, :active_noupdate, :last_updated_by_name, :detailed_resource_noupdate, :show_to_customer_noupdate,
                     :as => :role_update
-
+=end
     
     belongs_to :last_updated_by, :class_name => 'Authentify::User'
     belongs_to :status, :class_name => 'Commonx::MiscDefinition'

@@ -25,7 +25,7 @@ module ResourceAllocx
     end
 
     def create
-      @allocation = ResourceAllocx::Allocation.new(params[:allocation], :as => :role_new)
+      @allocation = ResourceAllocx::Allocation.new(new_params)
       @allocation.last_updated_by_id = session[:user_id]
       @detailed_resource_category = session[:detailed_resource_category]
       @allocation.detailed_resource_category = @detailed_resource_category
@@ -48,7 +48,7 @@ module ResourceAllocx
     def update
       @allocation = ResourceAllocx::Allocation.find(params[:id])
       @allocation.last_updated_by_id = session[:user_id]
-      if @allocation.update_attributes(params[:allocation], :as => :role_update)
+      if @allocation.update_attributes(edit_params)
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       else
         @erb_code = find_config_const('allocation_edit_view_' + @allocation.detailed_resource_category, 'resource_allocx')
@@ -85,5 +85,16 @@ module ResourceAllocx
       @positions = @positions.split(',').map{|x| [  I18n.t(x.strip.humanize.titleize) , x.strip  ] } if @positions      
     end
 
+    private
+    
+    def new_params
+      params.require(:allocation).permit(:resource_id, :resource_string, :detailed_resource_category, :assigned_as, :description, :start_date, :end_date, :status_id,
+                     :detailed_resource_id, :active, :show_to_customer)
+    end
+    
+    def edit_params
+      params.require(:allocation).permit(:resource_id, :resource_string, :detailed_resource_category, :assigned_as, :description, :start_date, :end_date, :status_id,
+                     :detailed_resource_id, :active, :show_to_customer)
+    end
   end
 end
