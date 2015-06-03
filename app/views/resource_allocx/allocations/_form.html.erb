@@ -1,6 +1,7 @@
 <% if @view_in_config && @erb_code %>
     <%= render inline: @erb_code %>
 <% else %>
+<h4><%=@title %></h4>
 <%= simple_form_for @allocation do |f| %>    
 	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 3} %>
 	  <%= f.input :start_date, :label => t('Start Date'), :as => :string, :readonly => readonly?(@allocation, 'start_date') %>

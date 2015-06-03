@@ -3,6 +3,7 @@
   
 <% else %>
 <div class="pagination"><%= will_paginate models %></div>
+<h4><%= @title %>-<%=t(@detailed_resource_category.titleize)%></h4>	
     <table class="table table-striped">
 		<tr>
             <th>#</th>
