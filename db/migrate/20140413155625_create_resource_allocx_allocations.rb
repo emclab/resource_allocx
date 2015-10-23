@@ -21,6 +21,6 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
     add_index :resource_allocx_allocations, :resource_string
     add_index :resource_allocx_allocations, :active
     add_index :resource_allocx_allocations, :detailed_resource_category
-    add_index :resource_allocx_allocations, :detailed_resource_id, :name => 'res_allocx_detailed_resource_id'
+    add_index :resource_allocx_allocations, :detailed_resource_id, :name => 'res_allocx_detailed_res_id'
   end
 end
