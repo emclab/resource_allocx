@@ -23,6 +23,7 @@ class CreateSwModuleInfoxModuleInfos < ActiveRecord::Migration
       t.text :about_misc_def
 
       t.timestamps
+      t.string :fort_token
     end
     
     add_index :sw_module_infox_module_infos, :category_id

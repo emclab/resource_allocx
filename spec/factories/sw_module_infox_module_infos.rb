@@ -20,5 +20,6 @@ FactoryGirl.define do
     about_log "MyText"
     about_view "MyText"
     about_misc_def 'misc def'
+    fort_token '123456789'
   end
 end

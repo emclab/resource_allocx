@@ -4,5 +4,6 @@ FactoryGirl.define do
   factory :user_role, :class => 'Authentify::UserRole' do
     role_definition_id 1
     user_id 1
+    fort_token '123456789'
   end
 end

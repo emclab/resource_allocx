@@ -6,5 +6,6 @@ FactoryGirl.define do
     engine_version  nil
     argument_name   "Pagination"
     argument_value  30
+    fort_token '123456789'
   end
 end

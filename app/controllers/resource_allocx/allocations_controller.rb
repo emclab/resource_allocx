@@ -14,14 +14,14 @@ module ResourceAllocx
       @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_string) = ?', @resource_string) if @resource_string
       @allocations = @allocations.where('TRIM(resource_allocx_allocations.detailed_resource_category) = ?', @detailed_resource_category) if @detailed_resource_category
       @allocations = @allocations.page(params[:page]).per_page(@max_pagination)
-      @erb_code = find_config_const('allocation_index_view_' + @detailed_resource_category, 'resource_allocx')
+      @erb_code = find_config_const('allocation_index_view_' + @detailed_resource_category, session[:fort_token], 'resource_allocx')
     end
 
     def new
       @title = t('New Allocation')
       @allocation = ResourceAllocx::Allocation.new()
       session[:detailed_resource_category] = @detailed_resource_category
-      @erb_code = find_config_const('allocation_new_view_' + @detailed_resource_category, 'resource_allocx')
+      @erb_code = find_config_const('allocation_new_view_' + @detailed_resource_category, session[:fort_token], 'resource_allocx')
     end
 
     def create
@@ -29,11 +29,12 @@ module ResourceAllocx
       @allocation.last_updated_by_id = session[:user_id]
       @detailed_resource_category = session[:detailed_resource_category]
       @allocation.detailed_resource_category = @detailed_resource_category
+      @allocation.fort_token = session[:fort_token]
       if @allocation.save
         session[:detailed_resrouce_category] = nil
-        redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       else
-        @erb_code = find_config_const('allocation_new_view_' + @detailed_resource_category, 'resource_allocx')
+        @erb_code = find_config_const('allocation_new_view_' + @detailed_resource_category, session[:fort_token], 'resource_allocx')
         flash[:notice] = t('Data Error. Not Saved!')
         render 'new'
       end
@@ -42,16 +43,16 @@ module ResourceAllocx
     def edit
       @title = t('Edit Allocation')
       @allocation = ResourceAllocx::Allocation.find(params[:id])
-      @erb_code = find_config_const('allocation_edit_view_' + @allocation.detailed_resource_category, 'resource_allocx')
+      @erb_code = find_config_const('allocation_edit_view_' + @allocation.detailed_resource_category, session[:fort_token], 'resource_allocx')
     end
 
     def update
       @allocation = ResourceAllocx::Allocation.find(params[:id])
       @allocation.last_updated_by_id = session[:user_id]
       if @allocation.update_attributes(edit_params)
-        redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+        redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Updated!")
       else
-        @erb_code = find_config_const('allocation_edit_view_' + @allocation.detailed_resource_category, 'resource_allocx')
+        @erb_code = find_config_const('allocation_edit_view_' + @allocation.detailed_resource_category, session[:fort_token], 'resource_allocx')
         flash[:notice] = t('Data Error. Not Saved!')
         render 'edit'
       end
@@ -61,12 +62,12 @@ module ResourceAllocx
     def show
       @title = t('Allocation Info')
       @allocation = ResourceAllocx::Allocation.find(params[:id])
-      @erb_code = find_config_const('allocation_show_view_' + @allocation.detailed_resource_category, 'resource_allocx')
+      @erb_code = find_config_const('allocation_show_view_' + @allocation.detailed_resource_category, session[:fort_token], 'resource_allocx')
     end
     
     def destroy  
       ResourceAllocx::Allocation.delete(params[:id].to_i)
-      redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
+      redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Deleted!")
     end
 
     protected
@@ -81,7 +82,7 @@ module ResourceAllocx
     end
 
     def assigned_positions      
-      @positions = find_config_const('allocation_assigned_position_' + @detailed_resource_category, 'resource_allocx') if @detailed_resource_category
+      @positions = find_config_const('allocation_assigned_position_' + @detailed_resource_category, session[:fort_token], 'resource_allocx') if @detailed_resource_category
       @positions = @positions.split(',').map{|x| [  I18n.t(x.strip.humanize.titleize) , x.strip  ] } if @positions      
     end
 

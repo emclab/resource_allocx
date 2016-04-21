@@ -8,6 +8,7 @@ class CreateAuthentifyZones < ActiveRecord::Migration
       t.integer :ranking_order
 
       t.timestamps
+      t.string :fort_token
     end
     
     add_index :authentify_zones, [:id, :active]

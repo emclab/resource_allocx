@@ -16,6 +16,7 @@ class CreateCommonxSearchStatConfigs < ActiveRecord::Migration
       t.string :stat_header
       t.text :search_params
       t.text :search_summary_function
+      t.string :fort_token
     end
     
     add_index :commonx_search_stat_configs, :resource_name

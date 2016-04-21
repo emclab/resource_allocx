@@ -6,5 +6,6 @@ FactoryGirl.define do
     brief_note "role sales"
     manager_role_id 1
     last_updated_by_id 1
+    fort_token '123456789'
   end
 end

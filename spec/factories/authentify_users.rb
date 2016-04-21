@@ -11,5 +11,6 @@ FactoryGirl.define do
     auth_token            "123"
     password_reset_token  nil
     password_reset_sent_at nil
+    fort_token '123456789'
   end
 end

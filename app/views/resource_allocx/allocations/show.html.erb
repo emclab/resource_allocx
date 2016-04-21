@@ -1,4 +1,4 @@
-<% if @view_in_config && @erb_code %>
+<% if @erb_code %>
   <%= render inline: ERB.new(@erb_code).result(binding) %>
   
   <% else %>
@@ -31,7 +31,7 @@
 </p>
 
 
-  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+  <%= link_to t('Back'), SUBURI + "/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <%= link_to t('Delete'), allocation_path(@allocation), :method => :delete, :confirm => I18n.t('Delete the record?'), :class => BUTTONS_CLS['action'] if has_action_right?('destroy', params[:controller], @allocation) %>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

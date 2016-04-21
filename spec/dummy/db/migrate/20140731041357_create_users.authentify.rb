@@ -19,6 +19,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :allow_email, :default => false
       t.integer :customer_id
       t.string :local
+      t.string :fort_token
     end
     
     add_index :authentify_users, :name

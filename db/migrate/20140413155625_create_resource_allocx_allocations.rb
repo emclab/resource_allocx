@@ -14,6 +14,7 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
       t.integer   :last_updated_by_id
       t.timestamps
       t.boolean :show_to_customer
+      t.string :fort_token
     end
 
     add_index :resource_allocx_allocations, [:resource_id, :resource_string], :name => 'res_allocx_alllocations_id_string'
@@ -22,5 +23,6 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
     add_index :resource_allocx_allocations, :active
     add_index :resource_allocx_allocations, :detailed_resource_category, :name => 'res_category'
     add_index :resource_allocx_allocations, :detailed_resource_id, :name => 'res_allocx_detailed_res_id'
+    add_index :resource_allocx_allocations, :fort_token
   end
 end

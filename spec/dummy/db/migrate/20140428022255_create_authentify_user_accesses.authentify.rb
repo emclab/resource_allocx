@@ -15,6 +15,7 @@ class CreateAuthentifyUserAccesses < ActiveRecord::Migration
       t.integer :rank
 
       t.timestamps
+      t.string :fort_token
     end
     
     add_index :authentify_user_accesses, :action

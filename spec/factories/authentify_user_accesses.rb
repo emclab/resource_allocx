@@ -11,5 +11,6 @@ FactoryGirl.define do
     masked_attrs ""
     rank 1
     brief_note "access rule"
+    fort_token '123456789'
   end
 end

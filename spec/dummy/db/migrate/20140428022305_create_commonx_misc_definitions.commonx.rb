@@ -10,6 +10,7 @@ class CreateCommonxMiscDefinitions < ActiveRecord::Migration
       t.integer :ranking_index
 
       t.timestamps
+      t.string :fort_token
     end
     
     add_index :commonx_misc_definitions, :for_which

@@ -8,6 +8,7 @@ class CreateCommonxLogs < ActiveRecord::Migration
       t.integer :last_updated_by_id
 
       t.timestamps
+      t.string :fort_token
     end
     
     add_index :commonx_logs, :resource_id

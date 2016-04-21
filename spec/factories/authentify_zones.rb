@@ -6,5 +6,6 @@ FactoryGirl.define do
     brief_note "zone hq"
     active true
     ranking_order 1
+    fort_token '123456789'
   end
 end

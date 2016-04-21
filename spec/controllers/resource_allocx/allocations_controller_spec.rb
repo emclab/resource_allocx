@@ -21,7 +21,7 @@ module ResourceAllocx
       ul = FactoryGirl.build(:user_level, :sys_user_group_id => ug.id)
       ul2 = FactoryGirl.build(:user_level, :sys_user_group_id => ug.id, :user_id => 2)
       @u = FactoryGirl.create(:user, :user_levels => [ul], :user_roles => [ur])
-      @u2 = FactoryGirl.create(:user, :user_levels => [ul2], :user_roles => [ur2], :name => 'name2', :login => 'login2', :email => 'email2@bb.com')
+      @u2 = FactoryGirl.create(:user, :user_levels => [ul2], :user_roles => [ur2], :name => 'name2', :login => 'login211', :email => 'email2@bb.com')
       @alloc_status = FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'alloc_status', :name => 'available')
       FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'alloc_status', :name => 'not available')
       FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'alloc_status', :name => 'vacation')
@@ -33,6 +33,7 @@ module ResourceAllocx
       FactoryGirl.create(:engine_config, :engine_name => 'resource_allocx', :engine_version => nil, :argument_name => 'allocation_positions_heavy_machine', :argument_value => "machine1,machine2, machine3")
       
       session[:user_role_ids] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id).user_role_ids
+      session[:fort_token] = @u.fort_token
     end
     
     render_views
@@ -112,7 +113,7 @@ module ResourceAllocx
         session[:detailed_resource_category] = 'man_power'
         alloc = FactoryGirl.attributes_for(:resource_allocx_allocation, :status_id => @alloc_status.id, :detailed_resource_category => 'man_power', :resource_id => 100, :resource_string => 'projectx/projects')
         get 'create', {:allocation => alloc}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       end
 
       it "should create two new allocations because of different resources" do
@@ -124,7 +125,7 @@ module ResourceAllocx
         alloc1 = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 99, :resource_string => 'projectx/xyz')
         alloc2 = FactoryGirl.attributes_for(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100, :resource_string => 'projectx/projects')
         get 'create', {:allocation => alloc2}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       end
 
       it "should render 'new' if data error" do
@@ -157,7 +158,7 @@ module ResourceAllocx
         session[:user_id] = @u.id
         alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => 100)
         get 'update', {:id => alloc.id, :allocation => {:assigned_as => 'xyz'}}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Updated!")
       end
       
       it "should render edit with data error" do
@@ -190,7 +191,7 @@ module ResourceAllocx
         engine = FactoryGirl.create(:sw_module_infox_module_info)
         alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => engine.id, :resource_string => 'sw_module_infox/module_infos')
         get 'destroy', {:id => alloc.id}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!") 
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Deleted!") 
       end
     end
 

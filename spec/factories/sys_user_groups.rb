@@ -6,5 +6,6 @@ FactoryGirl.define do
     group_type_id 1
     short_note "my group"
     zone_id 1
+    fort_token '123456789'
   end
 end

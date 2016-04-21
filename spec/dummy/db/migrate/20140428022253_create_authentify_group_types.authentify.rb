@@ -5,7 +5,7 @@ class CreateAuthentifyGroupTypes < ActiveRecord::Migration
       t.string :name
       t.timestamps
       t.string :brief_note
-      
+      t.string :fort_token
     end
   end
 end

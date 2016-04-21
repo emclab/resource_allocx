@@ -8,9 +8,10 @@ gemspec
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
 gem "will_paginate"
-gem 'tzinfo-data', platforms: [:mingw_20, :mingw, :mswin]
+gem 'tzinfo-data' #, platforms: [:mingw_20, :mingw, :mswin]
 gem 'protected_attributes'  #for rails 4
 gem 'factory_girl_rails' #rails 4.2
+gem 'coffee-script-source', '1.8.0' #for windows js
 
 #gem 'authentify', :git => 'http://github.com/emclab/authentify.git'
 #gem 'commonx', :git => 'http://github.com/emclab/commonx.git'
