@@ -16,11 +16,11 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
       t.boolean :show_to_customer
     end
 
-    add_index :resource_allocx_allocations, [:resource_id, :resource_string], :name => 'res_allocx_alllocations_id_string'
-    add_index :resource_allocx_allocations, :resource_id
-    add_index :resource_allocx_allocations, :resource_string
-    add_index :resource_allocx_allocations, :active
+    add_index :resource_allocx_allocations, [:resource_id, :resource_string], :name => 'alllocations_id_string'
+    add_index :resource_allocx_allocations, :resource_id, :name => :resource_id_index
+    add_index :resource_allocx_allocations, :resource_string, :name => :resource_string_index
+    add_index :resource_allocx_allocations, :active, :name => :active_index
     add_index :resource_allocx_allocations, :detailed_resource_category, :name => 'res_category'
-    add_index :resource_allocx_allocations, :detailed_resource_id, :name => 'res_allocx_detailed_res_id'
+    add_index :resource_allocx_allocations, :detailed_resource_id, :name => 'detailed_res_id_index'
   end
 end
