@@ -1,0 +1,41 @@
+<% if @erb_code %>
+<%= render inline: @erb_code %>
+<% else %>
+<div class="container-fluid">
+<p>Export Engine List CSV</p>
+ <%= form_tag multi_csv_result_allocations_path(format: 'csv'),  :method => :get do %>
+   <%= hidden_field_tag :subaction, "engine" %>
+ <table class="table table-hover">
+	<thead>
+  <tr>
+  	 <th></th>
+     <th><%= t('Project Name') %></th>
+     <th><%= t('Package#') %></th>
+     <th><%= t('Create At') %></th>
+     <th><%= t('Project Desp') %></th>
+  </tr>
+    </thead>
+    <tbody>
+<% @from_projects.each_with_index do |r, i| %>
+    <tr>
+  	<% pkg = ProjectMiscDefinitionx::MiscDefinition.where('definition_category = ? AND project_id = ?', 'package_code', r.id)%>
+    <td><%= check_box_tag 'ids[]',  r.id   %></td>
+    <td><%= r.name %></td>
+    <td><%= text_field_tag 'pkg_code[]', pkg.first.name if pkg.present? %></td>
+    <td><%= r.created_at.strftime('%Y/%m/%d') %></td>
+    <td><%= r.project_desp[0..60] if r.project_desp %></td>
+  </tr>
+<% end %>
+  </tbody>
+    </table>
+		
+	<div class="btn-toolbar">
+   
+  		  <%= link_to t('Back'), SUBURI + "/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+  		  <%= submit_tag t('Save') ,:name => "save", :class => BUTTONS_CLS['action'] %>
+  	 
+    </div>
+ <% end %>
+
+</div>
+<% end %>

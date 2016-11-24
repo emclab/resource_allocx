@@ -11,11 +11,11 @@
 	  <% else %>
 	    <%= f.input :active, :label => t('Active'), :collection => [[t('Yes'), true], [t('No'), false]], :include_blank => true %>
 	  <% end %>
-      <%= f.input :detailed_resource_id, :label => t('User'), :collection => Authentify::UsersHelper.return_users('index', 'info_service_projectx/projects') unless readonly?(@allocation, 'detailed_resource_id') %>
+      <%= f.input :detailed_resource_id, :label => t('User'), :collection => return_users('index', 'info_service_projectx/projects') unless readonly?(@allocation, 'detailed_resource_id') %>
       <%= f.input :detailed_resource_noupdate, :label => t('User'), :readonly => true, :input_html => {:value => Authentify::User.find_by_id(@allocation.detailed_resource_id).name} if readonly?(@allocation, 'detailed_resource_id') %>
       <%= f.input :assigned_as, :label => t('Assigned As'), :collection => @positions, :include_blank => true %>
       
-      <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+      <%= link_to t('Back'), SUBURI + "/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
 	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
 <% end %>  
 

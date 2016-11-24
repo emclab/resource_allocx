@@ -13,8 +13,15 @@ module ResourceAllocx
       @allocations = @allocations.where('resource_allocx_allocations.resource_id = ?', @resource_id) if @resource_id
       @allocations = @allocations.where('TRIM(resource_allocx_allocations.resource_string) = ?', @resource_string) if @resource_string
       @allocations = @allocations.where('TRIM(resource_allocx_allocations.detailed_resource_category) = ?', @detailed_resource_category) if @detailed_resource_category
-      @allocations = @allocations.page(params[:page]).per_page(@max_pagination)
+      #@allocations = @allocations.page(params[:page]).per_page(@max_pagination)
       @erb_code = find_config_const('allocation_index_view_' + @detailed_resource_category, 'resource_allocx')
+      #to csv
+      respond_to do |format|
+        format.html {@allocations = @allocations.page(params[:page]).per_page(@max_pagination) }
+        format.csv do
+          send_data @allocations.to_engine_csv(params[:index_from].to_i, params[:token?])
+        end if @detailed_resource_category && @detailed_resource_category == 'engine'
+      end
     end
 
     def new
@@ -67,6 +74,19 @@ module ResourceAllocx
     def destroy  
       ResourceAllocx::Allocation.delete(params[:id].to_i)
       redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
+    end
+    def multi_csv
+      @from_projects = InfoServiceProjectx::Project.where('cancelled = ? AND decommissioned = ?', false, false).order('id DESC')
+      @erb_code = find_config_const('allocation_multi_csv_view', 'resource_allocx')
+    end
+    
+    def multi_csv_result
+      @allocations = ResourceAllocx::Allocation.where(detailed_resource_category: 'engine').where(resource_id: params[:ids]).all.order('resource_id')
+      respond_to do |format|
+        format.csv do
+          send_data @allocations.m_to_csv()
+        end 
+      end
     end
 
     protected

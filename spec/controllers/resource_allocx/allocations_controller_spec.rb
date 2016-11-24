@@ -193,6 +193,18 @@ module ResourceAllocx
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!") 
       end
     end
+    
+    describe "Multi CSV" do
+      it "should render multi csv view" do
+        FactoryGirl.create(:user_access, :action => 'multi_csv', :resource =>'resource_allocx_allocations', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "")
+        session[:user_id] = @u.id
+        engine = FactoryGirl.create(:sw_module_infox_module_info)
+        alloc = FactoryGirl.create(:resource_allocx_allocation, :status_id => @alloc_status.id, :resource_id => engine.id, :resource_string => 'sw_module_infox/module_infos')
+        get 'multi_csv', {}
+        expect(response).to be_success
+      end
+    end
 
   end
 end
