@@ -36,9 +36,10 @@ module ResourceAllocx
       row << i
       row << SwModuleInfox::ModuleInfo.find_by_id(config.detailed_resource_id).name
       row << config.last_updated_by_id
+      row << token.strip if token.present? #fort_token
       row << config.created_at
       row << config.updated_at
-      row << token.strip if token.present? #fort_token
+
       
       return row
     end
