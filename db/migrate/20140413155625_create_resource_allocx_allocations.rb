@@ -5,7 +5,7 @@ class CreateResourceAllocxAllocations < ActiveRecord::Migration
       t.string    :resource_string
       t.string    :detailed_resource_category
       t.string    :assigned_as  #for man power, like sales, project manager.
-      t.integer   :detailed_resource_id
+      t.integer   :detailed_resource_id #from which the resource is allocated. For ex, Authentify::User, InfoServiceModulex::Module
       t.text      :description
       t.datetime  :start_date
       t.datetime  :end_date

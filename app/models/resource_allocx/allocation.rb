@@ -8,7 +8,7 @@ module ResourceAllocx
 
     validates :resource_string, :detailed_resource_category, :detailed_resource_id, :fort_token, :presence => true
     validates :resource_id, :last_updated_by_id, :detailed_resource_id, :presence => true, :numericality => {:only_integer => true, :greater_than => 0}
-    validates :detailed_resource_id, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :active]}, :if => 'active == true'
+    validates :detailed_resource_id, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :active, :fort_token]}, :if => 'active == true'
     validate :dynamic_validate
     
     default_scope {where(fort_token: Thread.current[:fort_token])}
