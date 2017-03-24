@@ -31,8 +31,13 @@ module ResourceAllocx
       @allocation.detailed_resource_category = @detailed_resource_category
       @allocation.fort_token = session[:fort_token]
       if @allocation.save
+        if params[:commit] == I18n.t('Save & New') #save and bring up template new again
+          flash[:notice] = t('Successfully Saved!')
+          redirect_to new_allocation_path(resource_id: @allocation.resource_id, resource_string: @allocation.resource_string, detailed_resource_category: session[:detailed_resrouce_category])
+        else
+          redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
+        end
         session[:detailed_resrouce_category] = nil
-        redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       else
         @erb_code = find_config_const('allocation_new_view_' + @detailed_resource_category, session[:fort_token], 'resource_allocx')
         flash[:notice] = t('Data Error. Not Saved!')
