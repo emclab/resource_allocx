@@ -29,6 +29,8 @@ module ResourceAllocx
       @allocation.last_updated_by_id = session[:user_id]
       @detailed_resource_category = session[:detailed_resource_category]
       @allocation.detailed_resource_category = @detailed_resource_category
+      @allocation.resource_id = session[:resource_id]
+      @allocation.resource_string = session[:resource_string]
       if @allocation.save
         session[:detailed_resrouce_category] = nil
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
