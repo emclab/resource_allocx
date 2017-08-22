@@ -30,6 +30,8 @@ module ResourceAllocx
       @detailed_resource_category = session[:detailed_resource_category]
       @allocation.detailed_resource_category = @detailed_resource_category
       @allocation.fort_token = session[:fort_token]
+      @allocation.resource_id = session[:resource_id]
+      @allocation.resource_string = session[:resource_string]
       if @allocation.save
         if params[:commit] == I18n.t('Save & New') #save and bring up template new again
           flash[:notice] = t('Successfully Saved!')
