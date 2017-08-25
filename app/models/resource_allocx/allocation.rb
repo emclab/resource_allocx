@@ -11,8 +11,8 @@ module ResourceAllocx
     validates :resource_id, :resource_string, :detailed_resource_category, :detailed_resource_id, :presence => {:message => I18n.t('Not blank')}
     validates :fort_token, :presence => true
     validates :resource_id, :detailed_resource_id, :presence => {:message => I18n.t('Not blank')}, :numericality => {:only_integer => true, :greater_than => 0}
-    validates :detailed_resource_id, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :assigned_as, :active, :fort_token]}, :if => 'active && assigned_as.present?'
-    validates :detailed_resource_id, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :active, :fort_token]}, :if => 'active && assigned_as.blank?'
+    validates :detailed_resource_id, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :assigned_as, :active, :fort_token], message: I18n.t('Duplicate') }, :if => 'active && assigned_as.present?'
+    validates :detailed_resource_id, :uniqueness => {:scope => [:resource_id, :resource_string, :detailed_resource_category, :active, :fort_token], message: I18n.t('Duplicate')}, :if => 'active && assigned_as.blank?'
     validate :dynamic_validate
           
     def dynamic_validate
